@@ -29,28 +29,42 @@
 
   <label for="tempo">Tempo:</label>
 
-  <input type="number" id="tempo" name="tempo"
+  <input type="number" id="tempo" value="60"
          min="40" max="280">
   
   <audio id="click">
-    <source src="click.wav"/>
+    <source src="click2.wav"/>
   </audio>
   <div>
     <button id="start">Start</button>
     <button id="stop">Stop</button> 
   </div>
-  <script>   
+  <script> 
+    const input = document.querySelector('input');
+    const tempo = document.getElementById('tempo'); 
+
+    function loopStart() {
+      intervalID = setInterval(() => mySound.play(), 60000/tempo.value);
+    }
+    function loopStop() {
+      clearInterval(intervalID);
+    }
+ 
+    input.addEventListener('change', updateValue);
+      function updateValue(e) {
+        tempo.value = e.target.value;
+        console.log(tempo.value); 
+    }
+    input.addEventListener('change', loopStart);
+    
+
+     
     const mySound = document.getElementById("click");   
     const startButton = document.getElementById("start"); 
     const stopButton = document.getElementById("stop"); 
-    function loopClick () {
-      setInterval(function(){ mySound.play(); },500);
-    }
-    function stopClick() {
-      clearInterval(loopClick);
-    }
-    startButton.addEventListener("click", loopClick)
-    stopButton.addEventListener("click", stopClick) 
+    
+    startButton.addEventListener("click", loopStart);
+    stopButton.addEventListener("click", loopStop); 
 
     </script>
 
