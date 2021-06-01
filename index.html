@@ -40,31 +40,39 @@
     <button id="stop">Stop</button> 
   </div>
   <script> 
-    const input = document.querySelector('input');
-    const tempo = document.getElementById('tempo'); 
-
-    function loopStart() {
-      intervalID = setInterval(() => mySound.play(), 60000/tempo.value);
-    }
-    function loopStop() {
-      clearInterval(intervalID);
-    }
- 
-    input.addEventListener('change', updateValue);
-      function updateValue(e) {
-        tempo.value = e.target.value;
-        console.log(tempo.value); 
-    }
-    input.addEventListener('change', loopStart);
-    
-
-     
+    let tempo = document.getElementById('tempo'); 
     const mySound = document.getElementById("click");   
     const startButton = document.getElementById("start"); 
     const stopButton = document.getElementById("stop"); 
+    let intervalID
+
+    function updateValue() {
+        tempo = document.getElementById('tempo'); 
+        console.log(tempo.value);
+    }
+
+    function loopStop() {
+      clearInterval(intervalID);
+      console.log('loopstop'+intervalID);
+
+    }
+
+    function loopStart() {
+      loopStop();
+      updateValue;
+      intervalID = setInterval(() => mySound.play(), 60000/tempo.value);
+      console.log('loopstart'+intervalID);
+    }
     
+ 
+    tempo.addEventListener('change', loopStart);
+      
     startButton.addEventListener("click", loopStart);
     stopButton.addEventListener("click", loopStop); 
+    
+
+     
+
 
     </script>
 
